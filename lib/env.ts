@@ -1,0 +1,17 @@
+// lib/env.ts
+export const Env = {
+  MONGODB_URI: process.env.MONGODB_URI!,
+  JWT_SECRET: process.env.JWT_SECRET!,
+  NODE_ENV: process.env.NODE_ENV,
+  RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
+  RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  SESSION_SECRET: process.env.SESSION_SECRET,
+  AWS_ACCESS_KEY: process.env.AWS_ACCESS_KEY,
+  AWS_ACCESS_SECRET: process.env.AWS_ACCESS_SECRET,
+  AWS_REGION: process.env.AWS_REGION,
+  AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME,
+  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+  NODE_ENV_PAYMENT: process.env.NODE_ENV_PAYMENT,
+}
