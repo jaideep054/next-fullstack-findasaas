@@ -146,6 +146,7 @@ export const deleteTool = async (toolId: string): Promise<any> => {
 
 export const trackAnalytics = async (toolId: string, eventType: string): Promise<string> => {
   const url = trackAnalyticsURL();
+  console.log(url)
   const { data } = await axios.post(url, { tool_id: toolId, event_type: eventType }, { withCredentials: true });
   return data.message;
 };
