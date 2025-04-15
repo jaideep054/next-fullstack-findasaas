@@ -542,7 +542,7 @@ const page = () => {
                           </p>
                           <p
                             onClick={() =>
-                              router.push(`/tool/${tool._id}/edit`)
+                              router.push(`/tool/edit/${tool._id}`)
                             }
                             className="px-4 py-2 bg-white border border-indigo-300 text-indigo-600 rounded-md hover:bg-indigo-50 transition-colors text-sm font-medium"
                           >

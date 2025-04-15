@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { motion } from "framer-motion";
@@ -19,7 +20,7 @@ export const Landing = () => {
 
   useEffect(() => {
     const callGetApprovedTools = async () => {
-      const data:any = await getApprovedTools();
+      const data: any = await getApprovedTools();
       setToolsCards(data);
       setFilteredTools(data);
     };
@@ -32,22 +33,22 @@ export const Landing = () => {
     let updatedTools = toolsCards;
 
     if (filter === "free") {
-      updatedTools = toolsCards.filter((tool:any) => tool.is_free);
+      updatedTools = toolsCards.filter((tool: any) => tool.is_free);
     } else if (filter === "paid") {
       updatedTools = toolsCards.filter(
-        (tool:any) => !tool.is_free && !tool.is_freemiun && !tool.is_onetime
+        (tool: any) => !tool.is_free && !tool.is_freemiun && !tool.is_onetime
       );
     } else if (filter === "freemium") {
-      updatedTools = toolsCards.filter((tool:any) => tool.is_freemiun);
+      updatedTools = toolsCards.filter((tool: any) => tool.is_freemiun);
     } else if (filter === "onetime") {
-      updatedTools = toolsCards.filter((tool:any) => tool.is_onetime);
+      updatedTools = toolsCards.filter((tool: any) => tool.is_onetime);
     }
 
     setFilteredTools(updatedTools);
   }, [filter, toolsCards]);
 
   // Search with debouncing
-  const handleSearch = debounce(async (query:any) => {
+  const handleSearch = debounce(async (query: any) => {
     if (query == null || !query.trim()) {
       return;
     }
@@ -71,7 +72,7 @@ export const Landing = () => {
     }
   }, [searchQuery, toolsCards]);
 
-  const floatingBubbleVariants:any = {
+  const floatingBubbleVariants: any = {
     animate: {
       y: [0, -15, 0],
       transition: {
@@ -85,16 +86,6 @@ export const Landing = () => {
   return (
     //
     <div className="min-h-screen">
-      {/* <Helmet>
-        <title>Find Your SaaS | Discover & Compare SaaS Tools Directory</title>
-        <link rel="canonical" href="https://findyoursaas.com/" />
-        <meta
-          name="description"
-          content="Discover the right SaaS for your needs. Explore, compare, and find top software solutions for free. Looking to reach a wider audience? List your SaaS for free."
-          data-rh="true"
-        />
-      </Helmet> */}
-
       {!user?.subscribed && (
         <NewsletterModal
           isOpen={isModalOpen}
@@ -432,7 +423,7 @@ export const Landing = () => {
 
             {/* Tool Cards Grid - Responsive columns */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12">
-              {filteredTools.map((card:any, index:number) => (
+              {filteredTools.map((card: any, index: number) => (
                 <ToolCard card={card} key={card._id} />
               ))}
             </div>
