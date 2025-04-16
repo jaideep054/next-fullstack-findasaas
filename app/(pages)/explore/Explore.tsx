@@ -9,8 +9,8 @@ import { categories } from "@/utils/constants";
 
 const Explore = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [toolsCards, setToolsCards] = useState<any>([]);
-  const [filteredTools, setFilteredTools] = useState<any>([]);
+  const [toolsCards, setToolsCards] = useState<Array<any>>([]);
+  const [filteredTools, setFilteredTools] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState("all");

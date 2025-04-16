@@ -10,7 +10,7 @@ import { formatDate, capitalizeFirstLetter, formatChartDate, sortChronologically
 import { filterOptions } from "@/utils/constants";
 import { useParams, useRouter } from "next/navigation";
 
-const ToolLogo = ({ name, logo }:any) => {
+const ToolLogo = ({ name, logo }:ToolLogoProps) => {
   if (logo) {
     return (
       <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200 flex items-center justify-center">
@@ -31,7 +31,7 @@ const ToolLogo = ({ name, logo }:any) => {
   return <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center">{name ? <span className="text-3xl font-bold text-gray-500">{name.charAt(0).toUpperCase()}</span> : <ImageIcon className="w-10 h-10 text-gray-400" />}</div>;
 };
 
-const CustomTooltip = ({ active, payload, label }:any) => {
+const CustomTooltip = ({ active, payload, label }:CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white p-4 border border-gray-200 rounded-lg shadow-md">

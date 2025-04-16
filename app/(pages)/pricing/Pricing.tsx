@@ -2,26 +2,26 @@
 
 import React, { useEffect, useState } from "react";
 import { faqs } from "@/utils/constants";
-// import { displayRazorpay } from "../payment/razorpay.js";
 import { useAuth } from "@/hooks/useAuth";
 import { getToolByUserId, googleLogin } from "@/services/api";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { displayRazorpay } from "@/app/payment/razorpay";
 
 const Pricing = () => {
   const { isLoggedIn, user, alreadyListed } = useAuth();
-  const [openFAQ, setOpenFAQ] = useState(null);
+  const [openFAQ, setOpenFAQ] = useState<number|any>(null);
   const router = useRouter();
 
   useEffect(() => {
     window.scrollTo(100, 100);
   }, []);
-  const toggleFAQ = (index:any) => {
+  const toggleFAQ = (index:number) => {
     setOpenFAQ(openFAQ === index ? null : index);
   };
 
-  const handleFeaturedPayment = async (e:any, tier:any) => {
+  const handleFeaturedPayment = async (e:any, tier:string) => {
     let userFetchedTool;
     if (user) {
       userFetchedTool = await getToolByUserId(user?._id);
@@ -40,7 +40,7 @@ const Pricing = () => {
       toast.success("You are already featured.");
       router.push("/profile");
     } else {
-      // await displayRazorpay(5, user, tier);
+      await displayRazorpay(5, user, tier);
     }
   };
 
@@ -279,7 +279,7 @@ const Pricing = () => {
           <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Got questions? We've got answers. If you don't find what you're looking for, feel free to contact us.</p>
 
           <motion.div className="max-w-3xl mx-auto space-y-6" variants={faqVariants} initial="hidden" animate="visible">
-            {faqs.map((faq:any, index:number) => (
+            {faqs.map((faq:Ifaqs, index:number) => (
               <motion.div key={index} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden" variants={faqItemVariants}>
                 <motion.div className="flex justify-between items-center cursor-pointer p-5 hover:bg-gray-50 transition-colors duration-200" onClick={() => toggleFAQ(index)}>
                   <div className="flex items-start">
