@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { fetchUser, logout } from '@/services/api'; 
+import { fetchUser, logout } from '@/frontendservices/api'; 
 
 type UserType = {
   id: string;

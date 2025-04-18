@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { ToolCard } from "@/components/Modals/ToolCard";
-import { getApprovedTools, searchTool } from "@/services/api";
+import { getApprovedTools, searchTool } from "@/frontendservices/api";
 import debounce from "lodash.debounce";
 import { motion, AnimatePresence } from "framer-motion";
 import { categories } from "@/utils/constants";
@@ -257,10 +257,10 @@ const Explore = () => {
             {showFilters ? "Hide Filters" : "Show Filters"}
           </motion.button>
         </div>
-
+        {/* typeof window !== 'undefined' ? window.innerWidth : 0 */}
         {/* Filters Section - Collapsible on Mobile */}
         <AnimatePresence>
-          {(showFilters || window.innerWidth >= 640) && (
+        {(showFilters || (typeof window !== "undefined" && window.innerWidth >= 640)) && (
             <motion.div className="mt-4 sm:mt-8 bg-white rounded-lg shadow-lg p-4 sm:p-6 max-w-6xl mx-auto" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3 }}>
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
                 <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-3 sm:mb-0">Filter Tools</h3>

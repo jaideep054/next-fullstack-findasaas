@@ -1,13 +1,17 @@
 "use client";
 
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
-import { getToolInformation, updateTool } from "@/services/api";
+import { getToolInformation, updateTool } from "@/frontendservices/api";
 import { useParams, useRouter } from "next/navigation";
 
-export const page = () => {
-  const { toolId }:any = useParams();
+export default function EditPage() {
+  const { toolId }: any = useParams();
   const logoInputRef = useRef<any>(null);
-  const screenshotRefs = [useRef<any>(null), useRef<any>(null), useRef<any>(null)];
+  const screenshotRefs = [
+    useRef<any>(null),
+    useRef<any>(null),
+    useRef<any>(null),
+  ];
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -70,7 +74,10 @@ export const page = () => {
             { title: "", description: "" },
             { title: "", description: "" },
           ],
-          screenshots: toolData?.images?.map((url:any) => ({ file: null, preview: url })) || [
+          screenshots: toolData?.images?.map((url: any) => ({
+            file: null,
+            preview: url,
+          })) || [
             { file: null, preview: "/api/placeholder/800/500" },
             { file: null, preview: "/api/placeholder/800/500" },
             { file: null, preview: "/api/placeholder/800/500" },
@@ -85,7 +92,7 @@ export const page = () => {
     loadToolData();
   }, [toolId]);
 
-  const handleInputChange = (e:any) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -93,11 +100,11 @@ export const page = () => {
     });
   };
 
-  const handleLogoUpload = (e:any) => {
+  const handleLogoUpload = (e: any) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e:any) => {
+      reader.onload = (e: any) => {
         setFormData({
           ...formData,
           logo: file,
@@ -108,11 +115,11 @@ export const page = () => {
     }
   };
 
-  const handleScreenshotUpload = (index:number, e:any) => {
+  const handleScreenshotUpload = (index: number, e: any) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e:any) => {
+      reader.onload = (e: any) => {
         const updatedScreenshots = [...formData.screenshots];
         updatedScreenshots[index] = {
           file: file,
@@ -132,11 +139,11 @@ export const page = () => {
     logoInputRef.current.click();
   };
 
-  const triggerScreenshotUpload = (index:number) => {
+  const triggerScreenshotUpload = (index: number) => {
     screenshotRefs[index].current.click();
   };
 
-  const handlePlatformChange = (platform:any) => {
+  const handlePlatformChange = (platform: any) => {
     setFormData({
       ...formData,
       platforms: {
@@ -146,7 +153,7 @@ export const page = () => {
     });
   };
 
-  const handleFeatureChange = (index:number, field:any, value:any) => {
+  const handleFeatureChange = (index: number, field: any, value: any) => {
     const updatedFeatures = [...formData.features];
     updatedFeatures[index] = {
       ...updatedFeatures[index],
@@ -159,7 +166,7 @@ export const page = () => {
     });
   };
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
 
@@ -181,7 +188,7 @@ export const page = () => {
     data.append("platforms", JSON.stringify(formData.platforms));
     data.append("features", JSON.stringify(formData.features));
 
-    formData.screenshots.forEach((screenshot:any, index:number) => {
+    formData.screenshots.forEach((screenshot: any, index: number) => {
       if (screenshot.file) {
         data.append("screenshots", screenshot.file);
       }
@@ -218,42 +225,89 @@ export const page = () => {
 
           <div className="p-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Edit Tool</h1>
-            <p className="text-gray-600 mb-8">Update your tool's information below.</p>
+            <p className="text-gray-600 mb-8">
+              Update your tool's information below.
+            </p>
 
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Basic Information */}
               <div className="space-y-6">
-                <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Basic Information</h2>
+                <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">
+                  Basic Information
+                </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
                       Tool Name*
                     </label>
-                    <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none" required />
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none"
+                      required
+                    />
                   </div>
 
                   <div>
-                    <label htmlFor="toolUrl" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="toolUrl"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
                       Tool URL*
                     </label>
-                    <input type="text" id="toolUrl" name="toolUrl" value={formData.toolUrl} onChange={handleInputChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none" required />
+                    <input
+                      type="text"
+                      id="toolUrl"
+                      name="toolUrl"
+                      value={formData.toolUrl}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none"
+                      required
+                    />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
                     Description*
                   </label>
-                  <textarea id="description" name="description" value={formData.description} onChange={handleInputChange} rows={4} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none" required />
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    rows={4}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none"
+                    required
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="category"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
                       Category*
                     </label>
-                    <select id="category" name="category" value={formData.category} onChange={handleInputChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none" required>
+                    <select
+                      id="category"
+                      name="category"
+                      value={formData.category}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none"
+                      required
+                    >
                       <option value="Analytics">Analytics</option>
                       <option value="Marketing">Marketing</option>
                       <option value="Productivity">Productivity</option>
@@ -266,7 +320,10 @@ export const page = () => {
                   </div>
 
                   <div className="relative">
-                    <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="category"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
                       Pricing*
                     </label>
                     <select
@@ -287,10 +344,11 @@ export const page = () => {
 
                         if (value === "free") pricingFlags.isFree = true;
                         if (value === "paid") pricingFlags.isPaid = true;
-                        if (value === "freemium") pricingFlags.isFreemium = true;
+                        if (value === "freemium")
+                          pricingFlags.isFreemium = true;
                         if (value === "oneTime") pricingFlags.isOneTime = true;
 
-                        setFormData((prevData:any) => ({
+                        setFormData((prevData: any) => ({
                           ...prevData,
                           ...pricingFlags,
                         }));
@@ -322,39 +380,85 @@ export const page = () => {
 
               {/* Logo Upload */}
               <div className="space-y-6">
-                <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Logo</h2>
+                <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">
+                  Logo
+                </h2>
 
                 <div>
-                  <input type="file" ref={logoInputRef} onChange={handleLogoUpload} accept="image/*" className="hidden" />
+                  <input
+                    type="file"
+                    ref={logoInputRef}
+                    onChange={handleLogoUpload}
+                    accept="image/*"
+                    className="hidden"
+                  />
                   <div className="flex items-center">
-                    <div onClick={triggerLogoUpload} className="w-32 h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors overflow-hidden">
+                    <div
+                      onClick={triggerLogoUpload}
+                      className="w-32 h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors overflow-hidden"
+                    >
                       {formData.logoPreview ? (
-                        <img loading="lazy" src={formData.logoPreview} alt="Logo preview" className="w-full h-full object-contain p-2" />
+                        <img
+                          loading="lazy"
+                          src={formData.logoPreview}
+                          alt="Logo preview"
+                          className="w-full h-full object-contain p-2"
+                        />
                       ) : (
                         <>
-                          <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                          <svg
+                            className="w-8 h-8 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            ></path>
                           </svg>
-                          <span className="mt-2 text-sm text-gray-500">Upload logo</span>
+                          <span className="mt-2 text-sm text-gray-500">
+                            Upload logo
+                          </span>
                         </>
                       )}
                     </div>
-                    <button type="button" onClick={triggerLogoUpload} className="ml-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button
+                      type="button"
+                      onClick={triggerLogoUpload}
+                      className="ml-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
                       {formData.logoPreview ? "Change logo" : "Upload logo"}
                     </button>
                   </div>
-                  <p className="mt-2 text-sm text-gray-500">PNG, JPG, GIF up to 2MB. Recommended size: 256x256px</p>
+                  <p className="mt-2 text-sm text-gray-500">
+                    PNG, JPG, GIF up to 2MB. Recommended size: 256x256px
+                  </p>
                 </div>
               </div>
 
               {/* Platforms */}
               <div className="space-y-6">
-                <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Platforms</h2>
+                <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">
+                  Platforms
+                </h2>
 
                 <div>
                   <div className="flex flex-wrap gap-3">
                     {Object.keys(formData.platforms).map((platform) => (
-                      <button key={platform} type="button" onClick={() => handlePlatformChange(platform)} className={`px-4 py-2 rounded-lg border transition-colors ${formData.platforms[platform] ? "bg-indigo-100 border-indigo-300 text-indigo-700" : "border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
+                      <button
+                        key={platform}
+                        type="button"
+                        onClick={() => handlePlatformChange(platform)}
+                        className={`px-4 py-2 rounded-lg border transition-colors ${
+                          formData.platforms[platform]
+                            ? "bg-indigo-100 border-indigo-300 text-indigo-700"
+                            : "border-gray-200 text-gray-600 hover:bg-gray-50"
+                        }`}
+                      >
                         {platform}
                       </button>
                     ))}
@@ -363,22 +467,57 @@ export const page = () => {
 
                 {/* Features */}
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Key Features</h2>
+                  <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">
+                    Key Features
+                  </h2>
 
                   <div className="space-y-4">
-                    {formData.features.map((feature:any, index:number) => (
-                      <div key={index} className="p-4 border border-gray-200 rounded-lg">
+                    {formData.features.map((feature: any, index: number) => (
+                      <div
+                        key={index}
+                        className="p-4 border border-gray-200 rounded-lg"
+                      >
                         <div className="mb-3">
-                          <label htmlFor={`feature-title-${index}`} className="block text-sm font-medium text-gray-700 mb-1">
+                          <label
+                            htmlFor={`feature-title-${index}`}
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                          >
                             Feature {index + 1} Title
                           </label>
-                          <input type="text" id={`feature-title-${index}`} value={feature.title} onChange={(e) => handleFeatureChange(index, "title", e.target.value)} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none" />
+                          <input
+                            type="text"
+                            id={`feature-title-${index}`}
+                            value={feature.title}
+                            onChange={(e) =>
+                              handleFeatureChange(
+                                index,
+                                "title",
+                                e.target.value
+                              )
+                            }
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none"
+                          />
                         </div>
                         <div>
-                          <label htmlFor={`feature-description-${index}`} className="block text-sm font-medium text-gray-700 mb-1">
+                          <label
+                            htmlFor={`feature-description-${index}`}
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                          >
                             Feature {index + 1} Description
                           </label>
-                          <textarea id={`feature-description-${index}`} value={feature.description} onChange={(e) => handleFeatureChange(index, "description", e.target.value)} rows={2} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none" />
+                          <textarea
+                            id={`feature-description-${index}`}
+                            value={feature.description}
+                            onChange={(e) =>
+                              handleFeatureChange(
+                                index,
+                                "description",
+                                e.target.value
+                              )
+                            }
+                            rows={2}
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none"
+                          />
                         </div>
                       </div>
                     ))}
@@ -387,40 +526,82 @@ export const page = () => {
 
                 {/* Screenshots */}
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Screenshots</h2>
+                  <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">
+                    Screenshots
+                  </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {Array.from({ length: 3 }).map((_, index) => {
-                      const screenshot = formData.screenshots?.[index] || { file: null, preview: null };
+                      const screenshot = formData.screenshots?.[index] || {
+                        file: null,
+                        preview: null,
+                      };
 
                       return (
                         <div key={index} className="relative">
-                          <input type="file" ref={screenshotRefs[index]} onChange={(e) => handleScreenshotUpload(index, e)} accept="image/*" className="hidden" />
-                          <div onClick={() => triggerScreenshotUpload(index)} className="aspect-video border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors overflow-hidden">
+                          <input
+                            type="file"
+                            ref={screenshotRefs[index]}
+                            onChange={(e) => handleScreenshotUpload(index, e)}
+                            accept="image/*"
+                            className="hidden"
+                          />
+                          <div
+                            onClick={() => triggerScreenshotUpload(index)}
+                            className="aspect-video border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors overflow-hidden"
+                          >
                             {screenshot.preview ? (
-                              <img loading="lazy" src={screenshot.preview} alt={`Screenshot ${index + 1}`} className="w-full h-full object-cover" />
+                              <img
+                                loading="lazy"
+                                src={screenshot.preview}
+                                alt={`Screenshot ${index + 1}`}
+                                className="w-full h-full object-cover"
+                              />
                             ) : (
                               <>
-                                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                <svg
+                                  className="w-8 h-8 text-gray-400"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                  ></path>
                                 </svg>
-                                <span className="mt-2 text-sm text-gray-500">Upload screenshot</span>
+                                <span className="mt-2 text-sm text-gray-500">
+                                  Upload screenshot
+                                </span>
                               </>
                             )}
                           </div>
-                          <button type="button" onClick={() => triggerScreenshotUpload(index)} className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                          <button
+                            type="button"
+                            onClick={() => triggerScreenshotUpload(index)}
+                            className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          >
                             {screenshot.file ? "Change image" : "Upload image"}
                           </button>
                         </div>
                       );
                     })}
                   </div>
-                  <p className="text-sm text-gray-500">PNG, JPG, GIF up to 5MB. Recommended size: 1280x720px</p>
+                  <p className="text-sm text-gray-500">
+                    PNG, JPG, GIF up to 5MB. Recommended size: 1280x720px
+                  </p>
                 </div>
 
                 {/* Submit Button */}
                 <div className="pt-4">
-                  <button disabled={loading} onClick={handleSubmit} className="cursor-pointer w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium rounded-lg shadow hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                  <button
+                    disabled={loading}
+                    onClick={handleSubmit}
+                    className="cursor-pointer w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium rounded-lg shadow hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                  >
                     Save Changes
                   </button>
                 </div>
@@ -431,6 +612,6 @@ export const page = () => {
       </div>
     </div>
   );
-};
+}
 
-export default page
+// export default page;

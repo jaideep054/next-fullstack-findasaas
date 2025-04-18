@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getToolAnalytics } from "@/services/api";
+import { getToolAnalytics } from "@/frontendservices/api";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Clock, Link2, MousePointer, Star, Image as ImageIcon } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";

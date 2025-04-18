@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { generateBadge } from "@/services/api";
+import { generateBadge } from "@/frontendservices/api";
 import { Copy, Check, X, RefreshCw, Zap, Eye } from "lucide-react";
 import toast from "react-hot-toast";
 

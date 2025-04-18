@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReviewCard from "./ReviewCard";
-import { createReview, googleLogin } from "@/services/api";
+import { createReview, googleLogin } from "@/frontendservices/api";
 import { useAuth } from "@/hooks/useAuth";
 import toast from "react-hot-toast";
 
@@ -80,7 +80,7 @@ const CreateReview = ({ toolInfo, allReviews, productRating }: any) => {
               </div>
               {productRating && (
                 <p className="ml-2 text-xl font-bold">
-                  {productRating?.averageRating} out of 5
+                  {productRating?.averageRating.toFixed(2)} out of 5
                 </p>
               )}
             </div>
@@ -144,7 +144,7 @@ const CreateReview = ({ toolInfo, allReviews, productRating }: any) => {
                 name="title"
                 value={newReview.title}
                 onChange={handleReviewChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border placeholder:text-gray-400 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Summarize your experience"
               />
             </div>
@@ -161,7 +161,7 @@ const CreateReview = ({ toolInfo, allReviews, productRating }: any) => {
                 value={newReview.content}
                 onChange={handleReviewChange}
                 rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 placeholder:text-gray-400 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="What did you like or dislike about this tool?"
               ></textarea>
             </div>

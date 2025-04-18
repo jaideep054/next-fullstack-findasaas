@@ -4,7 +4,7 @@ import debounce from "lodash.debounce";
 import { motion } from "framer-motion";
 import { NewsletterModal } from "@/components/Modals/NewsletterModal";
 import { useRouter } from "next/navigation";
-import { getApprovedTools, searchTool } from "@/services/api";
+import { getApprovedTools, searchTool } from "@/frontendservices/api";
 import { useAuth } from "@/hooks/useAuth";
 import { ToolCard } from "@/components/Modals/ToolCard";
 
@@ -47,7 +47,9 @@ export const Landing = () => {
     setFilteredTools(updatedTools);
   }, [filter, toolsCards]);
 
-  // Search with debouncing
+
+
+  
   const handleSearch = debounce(async (query: any) => {
     if (query == null || !query.trim()) {
       return;
@@ -172,6 +174,7 @@ export const Landing = () => {
         </div>
 
         {/* Centered Hero Text - Mobile Optimized */}
+        
         <motion.section
           className="px-4 sm:px-6 py-12 sm:py-16 max-w-7xl mx-auto flex flex-col items-center text-center relative z-10"
           initial={{ opacity: 0, y: 20 }}
@@ -222,7 +225,7 @@ export const Landing = () => {
                 <input
                   type="text"
                   placeholder={'Try: "Photo editing tools under $20"'}
-                  className="w-full p-4 pr-12 rounded-lg border border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-300"
+                  className="w-full placeholder:text-gray-400 p-4 pr-12 rounded-lg border border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-300"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />

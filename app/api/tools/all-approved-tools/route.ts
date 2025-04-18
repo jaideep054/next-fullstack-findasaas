@@ -1,10 +1,10 @@
 import { NextResponse , NextRequest} from 'next/server';
-import { getAllApprovedTools } from '@/controllers/toolController';
+import { getAllApprovedTools } from '@/service/toolService';
 
 
 export async function GET() {
 
-  console.log(NextRequest, "-.>>>>>>>>>>>>>>.")
+  // console.log(NextRequest, "-.>>>>>>>>>>>>>>.")
   try {
     const tools = await getAllApprovedTools();
     return NextResponse.json({ success: true, data: tools });

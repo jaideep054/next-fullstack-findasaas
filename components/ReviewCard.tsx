@@ -1,7 +1,8 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import { markReviewHelpful } from "@/services/api";
+import { markReviewHelpful } from "@/frontendservices/api";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 const ReviewCard = ({ allReviews }:any) => {
   const [reviews, setReviews] = useState(allReviews);
@@ -25,7 +26,7 @@ const ReviewCard = ({ allReviews }:any) => {
       {reviews?.map((review:any) => (
         <div key={review?._id} className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-start">
-            <img loading="lazy" src={review?.user_id?.profile_picture} alt={review?.user_id?.name} className="w-12 h-12 rounded-full mr-4" />
+            <Image height={500} width={500} loading="lazy" src={review?.user_id?.profile_picture} alt={review?.user_id?.name} className="w-12 h-12 rounded-full mr-4" />
             <div className="flex-grow">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
                 <h3 className="font-bold">{review?.user_id?.name}</h3>

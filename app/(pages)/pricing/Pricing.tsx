@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import { faqs } from "@/utils/constants";
 // import { displayRazorpay } from "../payment/razorpay.js";
 import { useAuth } from "@/hooks/useAuth";
-import { getToolByUserId, googleLogin } from "@/services/api";
+import { getToolByUserId, googleLogin } from "@/frontendservices/api";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const Pricing = () => {
   const { isLoggedIn, user, alreadyListed } = useAuth();
@@ -33,7 +34,7 @@ const Pricing = () => {
     //   toast.error("Your tool is either under review or rejected. Please wait before featuring your tool.");}
 
     if (!isLoggedIn) {
-      await googleLogin();
+      await signIn('google');
     } else if (user?.tier && user.tier === "featured" && !alreadyListed) {
       router.push("/onboard");
     } else if (user?.tier && user.tier === "featured") {
@@ -47,7 +48,7 @@ const Pricing = () => {
   const handleFreeTierAction = async (e:any) => {
     e.preventDefault();
     if (!isLoggedIn) {
-      await googleLogin();
+      await signIn('google');
     } else if (alreadyListed) {
       router.push("/profile");
     } else {

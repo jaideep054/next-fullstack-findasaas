@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { replaceS3WithCloudFront } from "@/utils/common";
 import { ExternalLink, Star } from "lucide-react";
-import { trackAnalytics } from "@/services/api";
+import { trackAnalytics } from "@/frontendservices/api";
 import { useRouter } from "next/navigation";
 
 export const ToolCard = ({ card }: any) => {

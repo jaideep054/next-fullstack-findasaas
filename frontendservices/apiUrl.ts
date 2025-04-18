@@ -1,14 +1,16 @@
 // const BASE_URL = "https://findyoursaas.com/api";
 const BASE_URL = "http://localhost:3000/api/"; 
 
+// const BASE_URL = typeof window !== 'undefined' ? `${window.location.origin}/api` : '';
 
-export const getGoogleLoginURL = (): string => `${BASE_URL}/auth/google`;
-export const fetchUserURL = (): string => `${BASE_URL}/auth/me`;
-export const logoutURL = (): string => `${BASE_URL}/auth/logout`;
+
+export const getGoogleLoginURL = (): string => `${BASE_URL}/auth/google`; //done
+export const fetchUserURL = (): string => `${BASE_URL}/auth/me`; // done
+export const logoutURL = (): string => `${BASE_URL}/auth/logout`; // done
 
 export const listToolURL = (): string => `${BASE_URL}/list-tool`;
-export const getApprovedToolsURL = (): string => `${BASE_URL}/all-approved-tools`;
-export const getToolInformationURL = (id: string): string => `${BASE_URL}/tool/${id}`;
+export const getApprovedToolsURL = (): string => `${BASE_URL}/tools/all-approved-tools`;
+export const getToolInformationURL = (id: string): string => `${BASE_URL}/tools/${id}`;
 export const getAllToolsURL = (): string => `${BASE_URL}/all-tools`;
 export const approveToolURL = (): string => `${BASE_URL}/approve-tool`;
 export const getToolByUserIdURL = (userId: string): string => `${BASE_URL}/toolbyuserid/${userId}`;
@@ -25,6 +27,11 @@ export const markHelpfulURL = (reviewId: string): string => `${BASE_URL}/mark-he
 
 export const searchToolsURL = (query: string): string =>
   `${BASE_URL}/tools/search?q=${encodeURIComponent(query)}`;
+
+export const searchToolsURL2 : string = `${BASE_URL}/tools/search/semantic`;
+
+
+
 export const searchToolsSemanticURL = (query: string): string =>
   `${BASE_URL}/tools/search/semantic?q=${encodeURIComponent(query)}`;
 

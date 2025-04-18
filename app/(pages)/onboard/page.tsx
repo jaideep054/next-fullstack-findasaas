@@ -1,12 +1,20 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { listTool } from "@/services/api";
+import { listTool } from "@/frontendservices/api";
 import { useAuth } from "@/hooks/useAuth";
 import { FieldErrors, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
-export const page = () => {
+
+
+interface FormData {
+  name: string;
+  toolUrl: string;
+  description: string;
+}
+
+export default function OnboardPage() {
   const { alreadyListed, user, loading } = useAuth();
   const logoInputRef = useRef<any>(null);
   const screenshotRefs = [
@@ -60,7 +68,7 @@ export const page = () => {
     register,
     formState: { errors },
     trigger,
-  } = useForm<FieldErrors<any>>({
+  } = useForm<FormData>({
     mode: "onBlur",
     defaultValues: {
       name: formData.name || "",
@@ -158,7 +166,7 @@ export const page = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
 
     const data = new FormData();
     data.append("name", formData.name);
@@ -193,7 +201,7 @@ export const page = () => {
       window.location.href = "/profile";
     }
 
-    setLoading(false);
+    // setLoading(false);
   };
 
   useEffect(() => {
@@ -325,9 +333,7 @@ export const page = () => {
                       {...register("name", {
                         required: "Tool name is required",
                       })}
-                      onBlur={(e) => {
-                        trigger("name");
-                      }}
+                      onBlur={() => trigger("name")}
                       type="text"
                       id="name"
                       name="name"
@@ -874,4 +880,3 @@ export const page = () => {
   );
 };
 
-export default page;

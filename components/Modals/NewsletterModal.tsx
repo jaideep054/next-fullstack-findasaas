@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, X, Loader2, MoveRight } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { newsletterSubscribe } from "@/services/api";
+import { newsletterSubscribe } from "@/frontendservices/api";
 
 // --- Add CSS for the button shine effect ---
 // You can put this in your main CSS file (e.g., index.css) or use a CSS-in-JS solution

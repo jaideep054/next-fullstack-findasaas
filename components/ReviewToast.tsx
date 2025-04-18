@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const ReviewToast = ({ reviews }: any) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -65,11 +66,13 @@ const ReviewToast = ({ reviews }: any) => {
                 <div className="flex-shrink-0">
                   <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
                     {mostHelpfulReview?.user_id?.profile_picture ? (
-                      <img
+                      <Image
                         loading="lazy"
                         src={mostHelpfulReview?.user_id?.profile_picture}
                         alt={mostHelpfulReview?.user_id?.name || "User"}
                         className="w-10 h-10 rounded-full object-cover"
+                        width={500}
+                        height={500}
                       />
                     ) : (
                       <svg

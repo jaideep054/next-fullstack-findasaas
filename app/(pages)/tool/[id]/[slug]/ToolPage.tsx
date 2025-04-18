@@ -5,7 +5,7 @@ import {
   getReviews,
   getToolInformation,
   trackAnalytics,
-} from "@/services/api";
+} from "@/frontendservices/api";
 import ReviewCard from "@/components/ReviewCard";
 import CreateReview from "@/components/CreateReview";
 import { useAuth } from "@/hooks/useAuth";
@@ -14,7 +14,7 @@ import { formatDate, replaceS3WithCloudFront } from "@/utils/common";
 import { useParams } from "next/navigation";
 import Head from "next/head";
 
-const ToolPage = () => {
+export default function ToolPage() {
   const { isLoggedIn } = useAuth();
   const { id }: any = useParams();
 
@@ -26,9 +26,12 @@ const ToolPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const descriptionRef = useRef<any>(null);
 
+
+  // console.log(toolInfo ,"toolInfo")
   useEffect(() => {
     const fetchToolInfo = async () => {
       const data = await getToolInformation(id);
+      // console.log(data)
       setToolInfo(data);
     };
 
@@ -176,7 +179,7 @@ const ToolPage = () => {
               <div className="md:ml-6 flex-grow">
                 <div className="flex items-center mb-2">
                   <h1 className="text-3xl font-bold text-gray-900">
-                    {toolInfo.name}
+                    {toolInfo?.name}
                   </h1>
                   <svg
                     className="w-6 h-6 ml-2 text-blue-500"
@@ -218,7 +221,7 @@ const ToolPage = () => {
                     <div>
                       {productRating && (
                         <span className="font-bold">
-                          {productRating?.averageRating}/5
+                          {productRating?.averageRating?.toFixed(2)}/5
                         </span>
                       )}
                       <div className="text-xs text-gray-500">User Rating</div>
@@ -233,15 +236,15 @@ const ToolPage = () => {
                   onClick={() => handleTrackEventClick("link_click")}
                   href={
                     toolInfo?.tool_url?.startsWith("http")
-                      ? toolInfo.tool_url
-                      : `https://${toolInfo.tool_url}`
+                      ? toolInfo?.tool_url
+                      : `https://${toolInfo?.tool_url}`
                   }
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-indigo-600 text-white font-medium px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center whitespace-nowrap"
                 >
                   <span className="flex items-center space-x-2">
-                    <span className="truncate">{`Get ${toolInfo.name}`}</span>
+                    <span className="truncate">{`Get ${toolInfo?.name}`}</span>
                     <svg
                       className="w-5 h-5"
                       fill="none"
@@ -344,7 +347,7 @@ const ToolPage = () => {
                         width={600}
                         className="max-h-full max-w-full object-contain cursor-pointer"
                         src={replaceS3WithCloudFront(
-                          toolInfo.images[currentImageIndex]
+                          toolInfo?.images[currentImageIndex]
                         )}
                         alt={`${toolInfo?.name || "Image"} screenshot ${
                           currentImageIndex + 1
@@ -442,7 +445,7 @@ const ToolPage = () => {
                     <img
                       loading="lazy"
                       className="max-w-full max-h-screen object-contain"
-                      src={toolInfo.images[currentImageIndex]}
+                      src={toolInfo?.images[currentImageIndex]}
                       alt={`${toolInfo?.name || "Image"} full view`}
                       onClick={(e) => e.stopPropagation()}
                     />
@@ -502,9 +505,9 @@ const ToolPage = () => {
                 className="bg-white rounded-lg shadow-md p-6"
               >
                 <h2 className="text-2xl font-bold mb-4">
-                  What is {toolInfo.name}?
+                  What is {toolInfo?.name}?
                 </h2>
-                <p className="text-gray-700 mb-4">{toolInfo.description}</p>
+                <p className="text-gray-700 mb-4">{toolInfo?.description}</p>
               </div>
 
               {/* Features section */}
@@ -560,7 +563,7 @@ const ToolPage = () => {
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm text-gray-500">Category</p>
-                    <p className="font-medium">{toolInfo.category}</p>
+                    <p className="font-medium">{toolInfo?.category}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Pricing</p>
@@ -569,7 +572,7 @@ const ToolPage = () => {
                   <div>
                     <p className="text-sm text-gray-500">Last Updated</p>
                     <p className="font-medium">
-                      {formatDate(toolInfo.updatedAt)}
+                      {formatDate(toolInfo?.updatedAt)}
                     </p>
                   </div>
 
@@ -578,8 +581,8 @@ const ToolPage = () => {
                       onClick={() => handleTrackEventClick("link_click")}
                       href={
                         toolInfo?.tool_url?.startsWith("http")
-                          ? toolInfo.tool_url
-                          : `https://${toolInfo.tool_url}`
+                          ? toolInfo?.tool_url
+                          : `https://${toolInfo?.tool_url}`
                       }
                       target="_blank"
                       rel="noopener noreferrer"
@@ -719,4 +722,4 @@ const ToolPage = () => {
   );
 };
 
-export default ToolPage;
+// export default ToolPage;

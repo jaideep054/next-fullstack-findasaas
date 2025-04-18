@@ -1,4 +1,6 @@
-"use client";
+'use client'
+
+
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import {
@@ -9,7 +11,7 @@ import {
   newsletterSubscribe,
   newsletterUnsubscribe,
   rejectTool,
-} from "@/services/api";
+} from "@/frontendservices/api";
 import { GenerateBadge } from "@/components/GenerateBadge";
 import { formatDate } from "@/utils/common";
 import ReactConfetti from "react-confetti";
@@ -34,8 +36,8 @@ const page = () => {
   const [upgradedTier, setUpgradedTier] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [windowDimension, setWindowDimension] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+    height: typeof window !== 'undefined' ? window.innerHeight : 0,
   });
 
   const toolsPerPage = 10;

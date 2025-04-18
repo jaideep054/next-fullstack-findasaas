@@ -71,8 +71,10 @@ export const getApprovedTools = async (): Promise<Tool[]> => {
 
 export const getToolInformation = async (id: string): Promise<Tool> => {
   const url = getToolInformationURL(id);
+  // console.log(url)
   const { data } = await axios.get(url);
-  return data.data;
+
+  return data;
 };
 
 export const getAllTools = async (): Promise<Tool[]> => {
@@ -111,7 +113,7 @@ export const createReview = async (data: any): Promise<any> => {
 export const getReviews = async (toolId: string): Promise<any[]> => {
   const url = getReviewsURL(toolId);
   const { data } = await axios.get(url, { withCredentials: true });
-  return data.data;
+  return data;
 };
 
 export const getProductRating = async (toolId: string): Promise<number> => {
