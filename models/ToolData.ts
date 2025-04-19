@@ -1,6 +1,6 @@
+import { generateQueryEmbedding } from "@/lib/utils/generateLocalEmbedding";
 import mongoose, { Document, Schema, Model } from "mongoose";
-// import { extractNumericPrice } from "@/lib/utils/common";
-// import { generateQueryEmbedding } from "@/lib/service/searchService";
+import { extractNumericPrice } from "@/lib/utils/common";
 
 interface Platforms {
   Mac: boolean;
@@ -91,13 +91,14 @@ const ToolDataSchema: Schema<IToolData> = new Schema(
   { timestamps: true }
 );
 
-// ToolDataSchema.pre<IToolData>("save", async function (next) {
-//   const featuresText = this.features.map((f) => `${f.title} ${f.description}`).join(" ");
-//   this.searchableText = `${this.name || ""} ${this.category || ""} ${this.description || ""} ${featuresText}`.trim();
-//   this.priceValue = extractNumericPrice(this.pricing);
-//   this.embedding = await generateQueryEmbedding(this.searchableText);
-//   next();
-// });
+ToolDataSchema.pre<IToolData>("save", async function (next) {
+  const featuresText = this.features.map((f) => `${f.title} ${f.description}`).join(" ");
+  this.searchableText = `${this.name || ""} ${this.category || ""} ${this.description || ""} ${featuresText}`.trim();
+  this.priceValue = extractNumericPrice(this.pricing);
+  const embedding = await generateQueryEmbedding(this.searchableText);
+  this.embedding = embedding ?? [];
+  next();
+});
 
 export const ToolData: Model<IToolData> =
   mongoose.models.ToolData || mongoose.model<IToolData>("ToolData", ToolDataSchema);

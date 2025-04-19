@@ -19,4 +19,4 @@ const AnalyticsSchema: Schema<IAnalytics> = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Analytics: Model<IAnalytics> = mongoose.model<IAnalytics>("Analytics", AnalyticsSchema);
+export const Analytics: Model<IAnalytics> =   mongoose.models.Analytics || mongoose.model<IAnalytics>("Analytics", AnalyticsSchema);

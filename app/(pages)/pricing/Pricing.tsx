@@ -9,6 +9,8 @@ import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { displayStripeCheckout } from "@/components/payment/displayStripeCheckout";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
 const Pricing = () => {
   const { isLoggedIn, user, alreadyListed } = useAuth();
@@ -41,7 +43,7 @@ const Pricing = () => {
       toast.success("You are already featured.");
       router.push("/profile");
     } else {
-      // await displayRazorpay(5, user, tier);
+      await displayStripeCheckout( 5 , user, tier)
     }
   };
 

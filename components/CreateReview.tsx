@@ -80,7 +80,7 @@ const CreateReview = ({ toolInfo, allReviews, productRating }: any) => {
               </div>
               {productRating && (
                 <p className="ml-2 text-xl font-bold">
-                  {productRating?.averageRating.toFixed(2)} out of 5
+                  {productRating?.averageRating?.toFixed(2)} out of 5
                 </p>
               )}
             </div>

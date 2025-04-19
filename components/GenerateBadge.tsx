@@ -23,13 +23,15 @@ export const GenerateBadge = ({ tool }:any) => {
   const currentMode = badgeState.mode;
 
   const generateBadgeCall = useCallback(
+    
     async (mode:any) => {
-      // Prevent call if already loading
+    
       if (badgeState.isLoading) return;
 
       setBadgeState((prev) => ({ ...prev, isLoading: true }));
       try {
-        const response = await generateBadge(tool._id, mode);
+
+        const response = await generateBadge(tool?._id, mode);
         if (response?.badgeCode) {
           // Check if response is valid
           setBadgeState((prev) => ({
@@ -52,7 +54,7 @@ export const GenerateBadge = ({ tool }:any) => {
       }
     },
     [tool?._id, badgeState.isLoading]
-  ); // Dependencies: tool ID and loading state
+  ); 
 
   const handleCopy = useCallback(() => {
     if (!existingBadgeCode) return;

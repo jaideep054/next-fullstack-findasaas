@@ -122,10 +122,18 @@ export const getProductRating = async (toolId: string): Promise<number> => {
   return data;
 };
 
-export const markReviewHelpful = async (reviewId: string): Promise<any> => {
-  const url = markHelpfulURL(reviewId);
-  const { data } = await axios.get(url, { withCredentials: true });
-  return data;
+
+
+
+export const markReviewHelpful = async (reviewId: string): Promise<any>  => {
+  const MARK_REVIEW_HELPFUL_URL = markHelpfulURL(reviewId);
+
+  try {
+    const response = await axios.get(MARK_REVIEW_HELPFUL_URL, { withCredentials: true });
+    return response.data;
+  } catch (error :any) {
+    return error.response.data;
+  }
 };
 
 export const rejectTool = async (data: any): Promise<any> => {
@@ -148,7 +156,6 @@ export const deleteTool = async (toolId: string): Promise<any> => {
 
 export const trackAnalytics = async (toolId: string, eventType: string): Promise<string> => {
   const url = trackAnalyticsURL();
-  console.log(url)
   const { data } = await axios.post(url, { tool_id: toolId, event_type: eventType }, { withCredentials: true });
   return data.message;
 };
@@ -168,11 +175,11 @@ export const generateBadge = async (toolId: string, mode: string): Promise<any> 
 export const newsletterSubscribe = async (email: string): Promise<string> => {
   const url = getSubscribeNewsletterURL();
   const { data } = await axios.post(url, { email }, { withCredentials: true });
-  return data.msg;
+  return data.message;
 };
 
 export const newsletterUnsubscribe = async (email: string): Promise<string> => {
   const url = getUnsubscribeURL();
   const { data } = await axios.post(url, {}, { withCredentials: true });
-  return data.msg;
+  return data.message;
 };

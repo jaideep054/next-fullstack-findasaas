@@ -37,7 +37,7 @@ const initializePipeline = async () => {
   }
 };
 
-export const generateQueryEmbedding = async (text : string) => {
+export const generateQueryEmbedding = async (text : string) : Promise<number[]| null> => {
   const searchText = text.trim();
   console.log(`Processing text for embedding: "${searchText}"`);
 
@@ -48,10 +48,8 @@ export const generateQueryEmbedding = async (text : string) => {
     const output = await currentExtractor(searchText, { pooling: "mean", normalize: true });
     console.timeEnd(`Embedding generation for "${searchText}"`);
 
-    const embedding = Array.from(output.data);
+    const embedding = Array.from(output.data) as number[];
     
-    // console.log(`Generated embedding for "${embedding}"`);
-
     return embedding;
   } catch (error) {
     console.error(`Error generating embedding for "${searchText}":`, error);

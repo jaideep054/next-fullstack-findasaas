@@ -5,6 +5,8 @@ import AuthSession from "../components/AuthSession";
 import Navbar from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import Head from "next/head"
+import { Toaster } from 'react-hot-toast';
+import StripeProvider from "@/components/payment/StripeProvider";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -34,8 +36,9 @@ export default function RootLayout({
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthSession>
+        <Toaster position="top-right" reverseOrder={false} />
           <Navbar />
-          {children}
+          <StripeProvider> {children}</StripeProvider>
           <Footer />
         </AuthSession>
       </body>

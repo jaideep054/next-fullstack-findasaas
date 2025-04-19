@@ -25,6 +25,5 @@ const ReviewSchema: Schema<IReview> = new Schema(
   { timestamps: true }
 );
 
-// Export the model with overwrite check
 export const Review: Model<IReview> =
   mongoose.models.Review || mongoose.model<IReview>("Review", ReviewSchema);

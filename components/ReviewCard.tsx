@@ -13,13 +13,15 @@ const ReviewCard = ({ allReviews }:any) => {
 
   const markAsHelpful = async (reviewId:any) => {
     const response = await markReviewHelpful(reviewId);
-
+    
     if (response.success) {
       setReviews((prevReviews:any) => prevReviews.map((review:any) => (review._id === reviewId ? { ...review, helpful: review.helpful + 1 } : review)));
     } else {
       toast.error(response.message);
     }
   };
+
+  
 
   return (
     <div className="space-y-6 mt-10">

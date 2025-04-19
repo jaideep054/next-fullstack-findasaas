@@ -55,62 +55,61 @@ export const getReviewsForProduct = async (toolId: string) => {
       "user_id",
       "name email profile_picture is_seller"
     );
-    return NextResponse.json(reviews, { status: 200 });
+    return reviews;
   } catch (error: any) {
     console.error("ERROR:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    throw new Error("Failed to fetch reviews");
   }
 };
 
 export const getTotalRatingForProduct = async (toolId: string) => {
   try {
-  
-
-    const reviews  = await Review.find({ tool_id: toolId });
+    const reviews = await Review.find({ tool_id: toolId });
 
     if (reviews.length === 0) {
-      return NextResponse.json({ averageRating: 0, totalReviews: 0 }, { status: 200 });
+      return { averageRating: 0, totalReviews: 0 };
     }
 
-    const totalRating = reviews.reduce((sum, review) => sum + review?.rating, 0);
+    const totalRating = reviews.reduce((sum: number, review: any) => sum + review.rating, 0);
     const averageRating = totalRating / reviews.length;
 
-    return NextResponse.json({ averageRating, totalReviews: reviews.length }, { status: 200 }); 
-  } catch (error: any) {
-    console.error("ERROR:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return { averageRating, totalReviews: reviews.length };
+  } catch (error) {
+    console.error("getTotalRatingForProduct ERROR:", error);
+    throw new Error("Internal server error");
   }
 };
 
-export const markReviewAsHelpful = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
+export const markReviewAsHelpful = async (reviewId: string, user_id : any ) => {
   try {
-    const { reviewId } = req.query;
-    const user_id = req.user.id || req.user._id;
-
+ 
     const review = await Review.findById(reviewId);
     if (!review) {
-      return res.status(404).json({ message: "Review not found" });
-    }
+      return NextResponse.json({ message : "Review not found" }, { status: 404 });
+     }
 
     if (!review.helpfulUsers) {
       review.helpfulUsers = [];
     }
 
     if (review.helpfulUsers.includes(user_id)) {
-      return res.status(400).json({ message: "You have already marked this review as helpful." });
+      return NextResponse.json({ message : "You have already marked this review as helpful." }, { status: 400 });
     }
 
     review.helpful += 1;
     review.helpfulUsers.push(user_id);
     await review.save();
 
-    return res.status(200).json({
+
+    return NextResponse.json({
       message: "Marked review as helpful",
       helpfulCount: review.helpful,
       success: true,
-    });
+    }, { status: 200 });
+
+
   } catch (error: any) {
     logger.error("ERROR:", error);
-    return res.status(500).json({ message: "Server error", error: error.message });
+    return NextResponse.json({ message : "Server error" }, { status: 500 });
   }
 };

@@ -1,0 +1,13 @@
+export const MAIL_SIGN_UP = "mail_sign_up";
+export const MAIL_PAYMENT = "mail_payment";
+export const MAIL_LISTING_PENDING = "mail_listing_pending";
+export const MAIL_LISTING_APPROVED = "mail_listing_approved";
+export const MAIL_LISTING_REJECTED = "mail_listing_rejected";
+export const FEATURE_ROLL_OUT = "mail_feature_roll_out";
+export const SIGNUP_TEMPLATE_ID = "d-e78376d599664205960e38dfe2c5511b";
+export const PAYMENT_TEMPLATE_ID = "d-e46448249f1f4d8b80dd76f60a632cbc";
+export const LISTING_PENDING_TEMPLATE_ID = "d-c9cebb569f4e4965960e1410e22019d8";
+export const LISTING_APPROVED_TEMPLATE_ID = "d-d6f1ad24ada94e719e26533719fa2ea3";
+export const LISTING_REJECTED_TEMPLATE_ID = "d-a79579670f8e4cbbb2b9bcaf847cc777";
+export const FEATURE_ROLL_OUT_TEMPLATE_ID = "d-261dbd781ac64777b00494a4f17b8b4f";
+export const ADMIN_MAIL_TEMPLATE_ID = "d-663d6cf676a24da993a2e118508c5819";
